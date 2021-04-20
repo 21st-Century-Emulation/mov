@@ -1,0 +1,6 @@
+.build/
+.swiftpm/
+test.sh
+Dockerfile
+.devcontainer/
+.gitignore
