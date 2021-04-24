@@ -25,6 +25,7 @@ final class CpuState: Content {
 
 final class Cpu: Content {
     var opcode: UInt8
+    var id: String
     var state: CpuState
 }
 
@@ -52,6 +53,7 @@ func routes(_ app: Application) throws {
     app.post("api", "v1", "execute") { req -> EventLoopFuture<Cpu> in
         let cpu = try req.content.decode(Cpu.self)
         let hl = (UInt16(cpu.state.h) << 8) | UInt16(cpu.state.l)
+        let id = cpu.id
 
         cpu.state.cycles += 5
 
@@ -190,27 +192,27 @@ func routes(_ app: Application) throws {
             cpu.state.l = cpu.state.a
         case 0x70: // MOV (HL),B
             cpu.state.cycles += 2
-            return req.client.post("\(writeMemoryApi)?address=\(hl)&value=\(cpu.state.b)").map { res in return cpu }
+            return req.client.post("\(writeMemoryApi)?id=\(id)&address=\(hl)&value=\(cpu.state.b)").map { res in return cpu }
         case 0x71: // MOV (HL),C
             cpu.state.cycles += 2
-            return req.client.post("\(writeMemoryApi)?address=\(hl)&value=\(cpu.state.c)").map { res in return cpu }
+            return req.client.post("\(writeMemoryApi)?id=\(id)&address=\(hl)&value=\(cpu.state.c)").map { res in return cpu }
         case 0x72: // MOV (HL),D
             cpu.state.cycles += 2
-            return req.client.post("\(writeMemoryApi)?address=\(hl)&value=\(cpu.state.d)").map { res in return cpu }
+            return req.client.post("\(writeMemoryApi)?id=\(id)&address=\(hl)&value=\(cpu.state.d)").map { res in return cpu }
         case 0x73: // MOV (HL),E
             cpu.state.cycles += 2
-            return req.client.post("\(writeMemoryApi)?address=\(hl)&value=\(cpu.state.e)").map { res in return cpu }
+            return req.client.post("\(writeMemoryApi)?id=\(id)&address=\(hl)&value=\(cpu.state.e)").map { res in return cpu }
         case 0x74: // MOV (HL),H
             cpu.state.cycles += 2
-            return req.client.post("\(writeMemoryApi)?address=\(hl)&value=\(cpu.state.h)").map { res in return cpu }
+            return req.client.post("\(writeMemoryApi)?id=\(id)&address=\(hl)&value=\(cpu.state.h)").map { res in return cpu }
         case 0x75: // MOV (HL),L
             cpu.state.cycles += 2
-            return req.client.post("\(writeMemoryApi)?address=\(hl)&value=\(cpu.state.l)").map { res in return cpu }
+            return req.client.post("\(writeMemoryApi)?id=\(id)&address=\(hl)&value=\(cpu.state.l)").map { res in return cpu }
         case 0x76: // HALT handled elsewhere
             throw Abort(.badRequest)
         case 0x77: // MOV (HL),A
             cpu.state.cycles += 2
-            return req.client.post("\(writeMemoryApi)?address=\(hl)&value=\(cpu.state.a)").map { res in return cpu }
+            return req.client.post("\(writeMemoryApi)?id=\(id)&address=\(hl)&value=\(cpu.state.a)").map { res in return cpu }
         case 0x78: // MOV A,B
             cpu.state.a = cpu.state.b
         case 0x79: // MOV A,C
