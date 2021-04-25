@@ -72,7 +72,7 @@ func routes(_ app: Application) throws {
             cpu.state.b = cpu.state.l
         case 0x46: // MOV B,(HL)
             cpu.state.cycles += 2
-            return req.client.get("\(readMemoryApi)?address=\(hl)").flatMapThrowing { res -> String in
+            return req.client.get("\(readMemoryApi)?id=\(cpu.id)&address=\(hl)").flatMapThrowing { res -> String in
                 res.body!.getString(at: 0, length: res.body!.readableBytes)!
             }.map { newValue in
                 cpu.state.b = UInt8(newValue)!
@@ -94,7 +94,7 @@ func routes(_ app: Application) throws {
             cpu.state.c = cpu.state.l
         case 0x4E: // MOV C,(HL)
             cpu.state.cycles += 2
-            return req.client.get("\(readMemoryApi)?address=\(hl)").flatMapThrowing { res -> String in
+            return req.client.get("\(readMemoryApi)?id=\(cpu.id)&address=\(hl)").flatMapThrowing { res -> String in
                 res.body!.getString(at: 0, length: res.body!.readableBytes)!
             }.map { newValue in
                 cpu.state.c = UInt8(newValue)!
@@ -116,7 +116,7 @@ func routes(_ app: Application) throws {
             cpu.state.d = cpu.state.l
         case 0x56: // MOV D,(HL)
             cpu.state.cycles += 2
-            return req.client.get("\(readMemoryApi)?address=\(hl)").flatMapThrowing { res -> String in
+            return req.client.get("\(readMemoryApi)?id=\(cpu.id)&address=\(hl)").flatMapThrowing { res -> String in
                 res.body!.getString(at: 0, length: res.body!.readableBytes)!
             }.map { newValue in
                 cpu.state.d = UInt8(newValue)!
@@ -138,7 +138,7 @@ func routes(_ app: Application) throws {
             cpu.state.e = cpu.state.l
         case 0x5E: // MOV E,(HL)
             cpu.state.cycles += 2
-            return req.client.get("\(readMemoryApi)?address=\(hl)").flatMapThrowing { res -> String in
+            return req.client.get("\(readMemoryApi)?id=\(cpu.id)&address=\(hl)").flatMapThrowing { res -> String in
                 res.body!.getString(at: 0, length: res.body!.readableBytes)!
             }.map { newValue in
                 cpu.state.e = UInt8(newValue)!
@@ -160,7 +160,7 @@ func routes(_ app: Application) throws {
             cpu.state.h = cpu.state.l
         case 0x66: // MOV H,(HL)
             cpu.state.cycles += 2
-            return req.client.get("\(readMemoryApi)?address=\(hl)").flatMapThrowing { res -> String in
+            return req.client.get("\(readMemoryApi)?id=\(cpu.id)&address=\(hl)").flatMapThrowing { res -> String in
                 res.body!.getString(at: 0, length: res.body!.readableBytes)!
             }.map { newValue in
                 cpu.state.h = UInt8(newValue)!
@@ -182,7 +182,7 @@ func routes(_ app: Application) throws {
             cpu.state.l = cpu.state.l
         case 0x6E: // MOV L,(HL)
             cpu.state.cycles += 2
-            return req.client.get("\(readMemoryApi)?address=\(hl)").flatMapThrowing { res -> String in
+            return req.client.get("\(readMemoryApi)?id=\(cpu.id)&address=\(hl)").flatMapThrowing { res -> String in
                 res.body!.getString(at: 0, length: res.body!.readableBytes)!
             }.map { newValue in
                 cpu.state.l = UInt8(newValue)!
@@ -227,7 +227,7 @@ func routes(_ app: Application) throws {
             cpu.state.a = cpu.state.l
         case 0x7E: // MOV A,(HL)
             cpu.state.cycles += 2
-            return req.client.get("\(readMemoryApi)?address=\(hl)").flatMapThrowing { res -> String in
+            return req.client.get("\(readMemoryApi)?id=\(cpu.id)&address=\(hl)").flatMapThrowing { res -> String in
                 res.body!.getString(at: 0, length: res.body!.readableBytes)!
             }.map { newValue in
                 cpu.state.a = UInt8(newValue)!
