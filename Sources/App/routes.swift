@@ -21,6 +21,7 @@ final class CpuState: Content {
     var programCounter: UInt16
     var cycles: UInt64
     var flags: CpuFlags
+    var interruptsEnabled: Bool
 }
 
 final class Cpu: Content {
